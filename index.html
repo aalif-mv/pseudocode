@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <button onclick="save('cEditor')">Save</button>
+        <button style="float: right;" onclick="runCode()">Run</button>
+    </nav>
+    <div class="container_">
+        <textarea name="editor" id="cEditor" cols="60" rows="24" ></textarea>
+        <div id="console">
+            <ul>
+                <li>Console launched .....</li>
+            </ul>
+        </div>
+    </div>
+    <script src="script/utils.js"></script>
+    <script src="script/data.js"></script>
+    <script src="script/executor.js"></script>
+    <script src="script/converter.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
