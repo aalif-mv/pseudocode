@@ -315,12 +315,15 @@ class Converter {
                     {
                     let outputContent = line.split(' ');
                     outputContent.shift();
-                    outputContent = outputContent.join(' ').trim().split(',');
-                    this.convertedSegment = 'OUT'
-                    outputContent.forEach(e => {
-                        this.convertedSegment += (' '+typeFormat(e, linker)[0]);
+                    outputContent = outputContent.join(' ').trim();
+                    let outputContent_ = returnFormat(outputContent);
+                    console.log(outputContent_);
+                    let lineT = '1NL';
+                    outputContent_.forEach(e => {
+                        this.convertedSegment = ('OUT '+typeFormat(e, linker)[0]+' '+lineT);
+                        this.converted.push(this.convertedSegment);
+                        if (outputContent_.length >= 2) lineT = '0NL';
                     });
-                    this.converted.push(this.convertedSegment);
                     break;
                     }
                 case 'FOR':

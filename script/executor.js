@@ -101,12 +101,8 @@ function execute(code) {
                 break;
             case 'OUT':
             {
-                let outputValues = [];
-                for (let i = 1; i < segments.length; i++) {
-                    const out = segments[i];
-                    outputValues.push(getData(out));
-                }
-                cPrint(outputValues.join(', '));
+                let outputValue = getData(segments[1]);
+                cPrint(outputValue, segments[2]);
             }
                 break;
             case 'JPN':

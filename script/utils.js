@@ -370,11 +370,11 @@ function calculate(eval) {
         result += (stack.pop() + " ");
     }
     result = result.trim();
-    console.log(result);
+    // console.log(result);
     return evaluate(result);
 }
 // console.log(calculate('213142+242421-2424532/3423423+532532'))
-console.log(calculate('3*(30/26^2)^2-(5?3)+1'))
+// console.log(calculate('3*(30/26^2)^2-(5?3)+1'))
 // console.log(calculate('(2+1)^2'))
 
 
@@ -576,7 +576,7 @@ function separateLogicAndArithmetic(ex) {
     return result.join('');
 }
 
-console.log(compare(separateLogicAndArithmetic('2+3>4||2*5-4=32')))
+// console.log(compare(separateLogicAndArithmetic('2+3>4||2*5-4=32')))
 
 function compFormat(dat, linker) {
     let condition = dat.replace(/  +/g, ' ').trim().split(' ');
@@ -679,9 +679,57 @@ function makeId(length) {
 
 // console.log(compFormat('if ((age+9)+3=3)>7-3and4=hi then'))
 
-function cPrint(text) {
-    const console = document.getElementById('console');
-    const list = console.getElementsByTagName('UL')[0];
+function returnFormat(exp) {
+    let stack = new Stack();
+    let result = [];
+    let l_exp = '';
+    for (let i = 0; i < exp.length; i++) {
+        const l = exp[i];
+        if (l == '"' || l == "'") {
+            if (stack.peek() == '"' || stack.peek() == "'") {
+                if (l == stack.peek()) {
+                    stack.pop();
+                    result.push("'"+l_exp+"'");
+                } else {
+                    l_exp += l;
+                    continue;
+                }
+            } else {
+                while (!stack.isEmpty() && stack.peek() == ',') {
+                    stack.pop();
+                }
+                stack.push(l);
+            }
+            l_exp = '';
+        } else if (l == ',' && !(stack.peek() == '"' || stack.peek() == "'")) {
+            if (stack.peek() == ',') {
+                let stk = stack.pop();
+                if (l == stk && l_exp !== '') {
+                    result.push(l_exp);
+                }
+            } else {
+                stack.push(l);
+            }
+            l_exp = '';
+        } else {
+            l_exp += l;
+        }
+    }
+    if (l_exp != '') result.push(l_exp);
+    return result;
+}
+
+console.log(returnFormat('"hi"'))
+
+
+function cPrint(text, nl) {
+    const console_ = document.getElementById('console');
+    const list = console_.getElementsByTagName('UL')[0];
+    if (nl == '0NL') {
+        let li = document.querySelector("#console > ul > li:last-child");
+        li.innerText += (' '+text);
+        return;
+    }
     let li = document.createElement('LI');
     li.innerText = text;
     list.appendChild(li);
